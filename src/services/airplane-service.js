@@ -1,9 +1,7 @@
 const { StatusCodes } = require("http-status-codes");
 
-const { AirplaneRepository } = require("../repositories");
 const AppError = require("../utils/errors/app-error");
-
-const airplaneRepository = new AirplaneRepository();
+const { airplaneRepository } = require("../repositories");
 
 async function createAirplane(data) {
   try {
@@ -24,4 +22,31 @@ async function createAirplane(data) {
   }
 }
 
-module.exports = { createAirplane };
+async function getAirplanes() {
+  try {
+    const airplanes = await airplaneRepository.getAll();
+    return airplanes;
+  } catch (error) {
+    throw new AppError(
+      "Error occurred while fetching airplanes",
+      StatusCodes.INTERNAL_SERVER_ERROR
+    );
+  }
+}
+
+async function getAirplane(id) {
+  try {
+    const airplane = await airplaneRepository.get(id);
+    return airplane;
+  } catch (error) {
+    if (error.statusCode === StatusCodes.NOT_FOUND)
+      throw new AppError("Airplane not found", error.statusCode);
+
+    throw new AppError(
+      "Error occurred while fetching airplane",
+      StatusCodes.INTERNAL_SERVER_ERROR
+    );
+  }
+}
+
+module.exports = { createAirplane, getAirplanes, getAirplane };

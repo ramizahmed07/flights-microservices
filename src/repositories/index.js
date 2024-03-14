@@ -1,7 +1,7 @@
-const AirplaneRepository = require("./airplane-repository");
-const CrudRepository = require("./crud-repository");
+const { CrudRepository } = require("./crud-repository");
+const { airplaneRepository } = require("./airplane-repository");
 
 module.exports = {
+  airplaneRepository,
   CrudRepository,
-  AirplaneRepository,
 };

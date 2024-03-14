@@ -1,4 +1,6 @@
-const { logger } = require("../config");
+const { StatusCodes } = require("http-status-codes");
+
+const AppError = require("../utils/errors/app-error");
 
 class CrudRepository {
   constructor(model) {
@@ -6,60 +8,37 @@ class CrudRepository {
   }
 
   async create(data) {
-    try {
-      const response = await this.model.create(data);
-      return response;
-    } catch (error) {
-      logger.error("Error occurred in Crud repo : create");
-      throw error;
-    }
+    const response = await this.model.create(data);
+    return response;
   }
 
   async delete(data) {
-    try {
-      const response = await this.model.delete({
-        where: {
-          id: data,
-        },
-      });
-      return response;
-    } catch (error) {
-      logger.error("Error occurred in Crud repo : delete");
-      throw error;
-    }
+    const response = await this.model.delete({
+      where: {
+        id: data,
+      },
+    });
+    return response;
   }
 
   async get(data) {
-    try {
-      const response = await this.model.findByPk(data);
-      return response;
-    } catch (error) {
-      logger.error("Error occurred in Crud repo : get");
-      throw error;
-    }
+    const response = await this.model.findByPk(data);
+    if (!response)
+      throw new AppError("Resource not found", StatusCodes.NOT_FOUND);
+    return response;
   }
 
   async getAll() {
-    try {
-      const response = await this.model.findAll();
-      return response;
-    } catch (error) {
-      logger.error("Error occurred in Crud repo : getAll");
-      throw error;
-    }
+    const response = await this.model.findAll();
+    return response;
   }
 
   async update(id, data) {
-    try {
-      const response = await this.model.update(data, {
-        where: { id },
-      });
-      return response;
-    } catch (error) {
-      logger.error("Error occurred in Crud repo : update");
-      throw error;
-    }
+    const response = await this.model.update(data, {
+      where: { id },
+    });
+    return response;
   }
 }
 
-module.exports = CrudRepository;
+module.exports = { CrudRepository };
