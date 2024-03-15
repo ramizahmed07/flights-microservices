@@ -11,11 +11,11 @@ const { airplaneMiddlewares } = require("../../middlewares");
 
 const router = express.Router();
 
-router.post("/", airplaneMiddlewares.validateCreateRequest, createAirplane);
-
 router.get("/", getAirplanes);
 
 router.get("/:id", getAirplane);
+
+router.post("/", airplaneMiddlewares.validateCreateRequest, createAirplane);
 
 router.delete("/:id", deleteAirplane);
 
