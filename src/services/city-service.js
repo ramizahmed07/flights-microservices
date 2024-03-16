@@ -8,6 +8,7 @@ async function getCities() {
     const cities = await cityRepository.getAll();
     return cities;
   } catch (error) {
+    console.log("ERROR", error);
     throw new AppError(
       "Error occurred while fetching cities",
       StatusCodes.INTERNAL_SERVER_ERROR
