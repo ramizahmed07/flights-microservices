@@ -3,4 +3,5 @@ module.exports = {
   ...require("./airplane-controller"),
   ...require("./city-controller"),
   ...require("./airport-controller"),
+  ...require("./flight-controller"),
 };
