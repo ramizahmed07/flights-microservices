@@ -13,9 +13,4 @@ app.use("/api", apiRoutes);
 app.listen(serverConfig.port, async () => {
   console.log(`Server is up and running on port: ${serverConfig.port}`);
   logger.info("Server started successfully");
-  // const ci = await Airport.create({
-  //   name: "John F. Kennedy International Airport",
-  //   code: "JFK",
-  //   cityId: 12,
-  // });
 });
